@@ -20,11 +20,19 @@ USER root
 ENV MYDIR /root
 WORKDIR ${MYDIR}
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # Copy all files from local folder to container, except the ones in .dockerignore
 COPY . .
 
 # Update system and install required packages (silently)
-RUN apt-get update && apt-get install -y python3.8 ssh openjdk-8-jre-headless vim net-tools iputils-ping dos2unix
+RUN apt-get update && apt-get install -y python3.8 ssh openjdk-8-jre-headless vim net-tools iputils-ping dos2unix 
+RUN apt-get install -y pip
+
+RUN pip install pandas
+RUN pip install pymongo
+RUN pip install fsspec
+RUN pip install pyarrow
 
 # Create a symbolic link to make 'python' be recognized as a system command
 RUN ln -sf /usr/bin/python3 /usr/bin/python

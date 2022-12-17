@@ -70,3 +70,17 @@ services:
     command: /root/config_files/bootstrap.sh
     volumes: 
       - ./apps:/root/apps
+
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports: 
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+    networks:
+      hadoop_network:
+        ipv4_address: 172.18.0.5
+
+volumes:
+  mongodata:
